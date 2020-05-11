@@ -1,0 +1,261 @@
+﻿<Window x:Class="dz13.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:dz13"
+        xmlns:cl="clr-namespace:dz13.Clients"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="MainWindow" 
+        ResizeMode="NoResize"
+        Height="450" Width="800">
+
+
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="211"/>
+            <ColumnDefinition Width="581*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="28"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.RowSpan="2" Grid.ColumnSpan="2">
+            <ToolBarTray DockPanel.Dock="Top">
+                <ToolBar>
+                    <Button x:Name="bClear" Content="Очистить" Click="bClear_Click"/>
+                    <Button x:Name="bImport"  Content="Импорт" Click="bImport_Click"/>
+                    <Button x:Name="bExport" Content="Экспорт" Click="bExport_Click" />
+                    <Button x:Name="bAddNewC" Content="Добавить" Click="bAddNewC_Click"/>
+                </ToolBar>
+            </ToolBarTray>
+            <TextBox AcceptsReturn="True" />
+        </DockPanel>
+
+        <ListView 
+            FontSize="14"
+            x:Name="dbList"
+            Margin="10" 
+            Grid.Row="1" 
+            Grid.Column="0" 
+            SelectionChanged="dbList_SelectionChanged">
+            
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Имя" Width="179" DisplayMemberBinding="{Binding ClientName}"/>
+                </GridView>
+            </ListView.View>
+
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Expander IsExpanded="True">
+                                            <Expander.Header>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="Gray" FontSize="20" VerticalAlignment="Bottom" />
+                                                </StackPanel>
+                                            </Expander.Header>
+                                            <ItemsPresenter />
+                                        </Expander>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                </GroupStyle>
+                    
+            </ListView.GroupStyle>
+        </ListView>
+
+        <Grid Visibility="Hidden"
+            x:Name="gridClient" 
+            Grid.Row="1" 
+            Grid.Column="1">
+            <StackPanel Orientation="Vertical">
+                
+                <TextBlock 
+                    Margin="10"
+                    x:Name="tbCType"
+                    FontSize="15"
+                    Text="Тип:"/>
+                
+                <TextBlock
+                    Margin="10,0"
+                    x:Name="tbCName"
+                    FontSize="15"
+                    Text="Имя:"/>
+
+                <TextBlock 
+                    Margin="10"
+                    x:Name="tbCSurname"
+                    FontSize="15"
+                    Text="Фамилия:"/>
+                
+                <TextBlock 
+                    Margin="10,0"
+                    x:Name="tbCAdress"
+                    FontSize="15"
+                    Text="Адрес:"/>
+
+                <TextBlock 
+                    Margin="10"
+                    x:Name="tbCInvoice"
+                    FontSize="15"
+                    Text="Доход:"/>
+
+                <TextBlock 
+                    Margin="10,0"
+                    x:Name="tbCAccount"
+                    FontSize="15"
+                    Text="Состояние счёта:"/>
+
+
+                <Grid Height="40" Margin="10,0">
+                    <TextBlock 
+                        Margin="0,10"
+                        FontSize="15"
+                        Text="Вклад:"/>
+
+                    <TextBlock 
+                        FontSize="15"
+                        x:Name="tbCDeposit"
+                        Margin="70,10,10,10"/>
+
+
+                    <Button x:Name="bDepositTransaction"
+                            HorizontalAlignment="Right"
+                            Content="Управление"
+                            Margin="0,0,10,0"
+                            FontSize="15"
+                            Width="100"
+                            Height="30" Click="bDepositTransaction_Click"/>
+                </Grid>
+
+                <StackPanel Orientation="Horizontal">
+                
+                    <Button Content="Перевод"
+                        FontSize="15"
+                        Width="100"
+                        Height="30" 
+                        Margin="10"
+                        HorizontalAlignment="Center"
+                        Click="bTransaction_Click"/>
+                
+                    <Button Content="История"
+                        FontSize="15"
+                        Width="100"
+                        Height="30" 
+                        Margin="10"
+                        HorizontalAlignment="Center"
+                        Click="bHistory_Click"/>
+                    
+                </StackPanel>
+
+            </StackPanel>
+            
+        </Grid>
+
+        <Grid Visibility="Hidden"
+            x:Name="gridEntity" 
+            Grid.Row="1" 
+            Grid.Column="1">
+            <StackPanel Orientation="Vertical">
+                
+                <TextBlock 
+                    Margin="10"
+                    x:Name="tbEType"
+                    FontSize="15"
+                    Text="Тип:"/>
+
+                <TextBlock 
+                    Margin="10,0"
+                    x:Name="tbEName1"
+                    FontSize="15"
+                    Text="Компания:"/>
+
+                <TextBlock 
+                    Margin="10"
+                    x:Name="tbEName"
+                    FontSize="15"
+                    Text="Имя:"/>
+
+                <TextBlock 
+                    Margin="10,0"
+                    x:Name="tbESurname"
+                    FontSize="15"
+                    Text="Фамилия:"/>
+
+                <TextBlock 
+                    Margin="10"
+                    x:Name="tbEAdress"
+                    FontSize="15"
+                    Text="Адрес:"/>
+
+                <TextBlock 
+                    Margin="10,0"
+                    x:Name="tbEInvoice"
+                    FontSize="15"
+                    Text="Доход:"/>
+
+                <TextBlock 
+                    Margin="10"
+                    x:Name="tbEAccount"
+                    FontSize="15"
+                    Text="Состояние счёта:"/>
+
+                <Grid Height="40" Margin="10,0">
+                    <TextBlock 
+                        FontSize="15"
+                        Text="Вклад:"/>
+
+                    <TextBlock 
+                        FontSize="15"
+                        x:Name="tbEDeposit"
+                        Margin="70,0,10,10"/>
+
+
+                    <Button 
+                            HorizontalAlignment="Right"
+                            Content="Управление"
+                            Margin="0,0,10,0"
+                            FontSize="15"
+                            Width="100"
+                            Height="30" Click="bDepositTransaction_Click"/>
+                </Grid>
+
+
+
+                <StackPanel Orientation="Horizontal">
+
+                    <Button Content="Перевод"
+                        FontSize="15"
+                        Width="100"
+                        Height="30" 
+                        Margin="10"
+                        HorizontalAlignment="Center"
+                        Click="bTransaction_Click"/>
+
+                    <Button Content="История"
+                        FontSize="15"
+                        Width="100"
+                        Height="30" 
+                        Margin="10"
+                        HorizontalAlignment="Center"
+                        Click="bHistory_Click"/>
+
+                </StackPanel>
+
+
+            </StackPanel>
+
+
+        </Grid>
+
+    </Grid>
+</Window>

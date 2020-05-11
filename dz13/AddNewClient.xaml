@@ -1,0 +1,239 @@
+﻿<Window x:Class="dz13.AddNewClient"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:local="clr-namespace:dz13"
+		mc:Ignorable="d"
+		Title="Добавить нового клиента" 
+        WindowStartupLocation="CenterScreen"
+        Height="355" Width="572" ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="37*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <TabControl x:Name="tabClient" TabStripPlacement="Top" Margin="5" Grid.Row="0">
+            <TabItem Header="Физ. лицо"
+					 Width="150"
+					 FontSize="15">
+                <Grid>
+                    <StackPanel Orientation="Vertical">
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBlock 
+                                Margin="10"
+								FontSize="15"
+								Text="Имя:"/>
+
+                            <TextBox 
+                                Margin="40,10"
+                                Width="433"
+                                FontSize="15"
+                                x:Name="tbCName"/>
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBlock 
+                                Margin="10,0"
+								FontSize="15"
+								Text="Фамилия:"/>
+
+                            <TextBox 
+                                Margin="8,0"
+                                Width="433"
+                                FontSize="15"
+                                x:Name="tbCSurname"/>
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBlock 
+								Margin="10"
+								FontSize="15"
+								Text="Адрес:"/>
+
+                            <TextBox 
+                                Margin="28,10,10,10"
+                                Width="433"
+                                FontSize="15"
+                                x:Name="tbCAdress"/>
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBlock 
+								Margin="10,0"
+								FontSize="15"
+								Text="Доход:"/>
+
+                            <TextBox 
+                                Margin="27,0"
+                                Width="142"
+                                FontSize="15"
+                                x:Name="tbCInvoice"/>
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBlock 
+								Margin="10"
+								FontSize="15"
+								Text="Состояние счёта:"/>
+
+                            <TextBox 
+                                Margin="10"
+                                Width="88"
+                                FontSize="15"
+                                x:Name="tbCAccount"/>
+
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBlock 
+								Margin="10,0"
+								FontSize="15"
+								Text="ВИП клиент:"/>
+                            
+                            <CheckBox 
+                                Margin="5"
+                                x:Name="cbIsVIP"/>
+
+                        </StackPanel>
+
+
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+
+            <TabItem Header="Юр. лицо" 
+					 Width="150"
+					 FontSize="15">
+                <Grid>
+                    <StackPanel Orientation="Vertical">
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBlock 
+                                Margin="10,10,0,0"
+								FontSize="15"
+								Text="Назавние компании:"/>
+
+                            <TextBox 
+                                Margin="10,10,0,0"
+                                Width="364"
+                                FontSize="15"
+                                x:Name="tbEName1"/>
+
+                        </StackPanel>
+                        
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBlock 
+                                Margin="10"
+								FontSize="15"
+								Text="Имя:"/>
+
+                            <TextBox 
+                                Margin="40,10"
+                                Width="433"
+                                FontSize="15"
+                                x:Name="tbEName"/>
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBlock 
+                                Margin="10,0"
+								FontSize="15"
+								Text="Фамилия:"/>
+
+                            <TextBox 
+                                Margin="8,0"
+                                Width="433"
+                                FontSize="15"
+                                x:Name="tbESurname"/>
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBlock 
+								Margin="10"
+								FontSize="15"
+								Text="Адрес:"/>
+
+                            <TextBox 
+                                Margin="28,10,10,10"
+                                Width="433"
+                                FontSize="15"
+                                x:Name="tbEAdress"/>
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBlock 
+								Margin="10,0"
+								FontSize="15"
+								Text="Доход:"/>
+
+                            <TextBox 
+                                Margin="27,0"
+                                Width="142"
+                                FontSize="15"
+                                x:Name="tbEInvoice"/>
+
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBlock 
+								Margin="10"
+								FontSize="15"
+								Text="Состояние счёта:"/>
+
+                            <TextBox 
+                                Margin="10"
+                                Width="88"
+                                FontSize="15"
+                                x:Name="tbEAccount"/>
+
+                        </StackPanel>
+
+
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+
+        <StackPanel Orientation="Horizontal"
+					HorizontalAlignment="Right"
+					Grid.Row="1">
+
+            <Button x:Name="Accept"
+					Margin="10"
+					Width="100"
+					FontSize="15"
+					Content="Принять" Click="Accept_Click"/>
+
+            <Button x:Name="Cancel"
+					Margin="10"
+					Width="100"
+					FontSize="15"
+					Content="Отмена" Click="Cancel_Click"/>
+
+        </StackPanel>
+    </Grid>
+</Window>
