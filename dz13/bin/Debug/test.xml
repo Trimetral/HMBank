@@ -1,10 +1,6 @@
 <?xml version="1.0"?>
 <ArrayOfClient xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Client xsi:type="Entity">
-    <invoice>
-      <Account>6578000</Account>
-      <Earning>700000</Earning>
-    </invoice>
     <ID>c93a3</ID>
     <Address>Владивосток, ул.Дворова, д.12к4</Address>
     <ClientName>ОАО Рога и Копыта</ClientName>
@@ -42,10 +38,6 @@
     <DirSurname>Строгов</DirSurname>
   </Client>
   <Client xsi:type="Entity">
-    <invoice>
-      <Account>2281780.00</Account>
-      <Earning>170000</Earning>
-    </invoice>
     <ID>53d79</ID>
     <Address>Москва, ул.Сталина, д.2</Address>
     <ClientName>ООО Много и мало</ClientName>
@@ -67,10 +59,6 @@
     <DirSurname>Иванов</DirSurname>
   </Client>
   <Client xsi:type="Person">
-    <invoice>
-      <Account>5000.00</Account>
-      <Earning>26000</Earning>
-    </invoice>
     <ID>13675</ID>
     <Address>Казань, ул.Ленина, д.12, кв.2</Address>
     <ClientName>Васильев</ClientName>
@@ -119,10 +107,6 @@
     <Vip>false</Vip>
   </Client>
   <Client xsi:type="Person">
-    <invoice>
-      <Account>90990.00</Account>
-      <Earning>32000</Earning>
-    </invoice>
     <ID>58b8b</ID>
     <Address>Москва, ул.Парова, д.23, кв.7</Address>
     <ClientName>Иванов</ClientName>
@@ -144,10 +128,6 @@
     <Vip>true</Vip>
   </Client>
   <Client xsi:type="Person">
-    <invoice>
-      <Account>65000</Account>
-      <Earning>35000</Earning>
-    </invoice>
     <ID>5acd5</ID>
     <Address>Москва, ул.Ленина, д.2, кв.23</Address>
     <ClientName>Филов</ClientName>
@@ -169,10 +149,6 @@
     <Vip>false</Vip>
   </Client>
   <Client xsi:type="Person">
-    <invoice>
-      <Account>351513.50</Account>
-      <Earning>20000</Earning>
-    </invoice>
     <ID>6700c</ID>
     <Address>Орёл, ул.Ленина, д.3, кв.5</Address>
     <ClientName>Яров</ClientName>
@@ -200,10 +176,6 @@
     <Vip>false</Vip>
   </Client>
   <Client xsi:type="Person">
-    <invoice>
-      <Account>40000</Account>
-      <Earning>33000</Earning>
-    </invoice>
     <ID>09f5d</ID>
     <Address>Санкт-Петербург, ул.Ленина, д.13, кв.2</Address>
     <ClientName>Стелов</ClientName>

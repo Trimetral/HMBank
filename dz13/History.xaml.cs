@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MainLibrary.Clients;
 
 namespace dz13
 {
@@ -19,7 +20,7 @@ namespace dz13
     /// </summary>
     public partial class History : Window
     {
-        public History(Clients.Client client)
+        public History(Client client)
         {
             InitializeComponent();
             lbHist.ItemsSource = client.Logs.Cases;

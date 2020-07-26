@@ -1,0 +1,5 @@
+C:\Users\Trim\source\repos\dz13\AccountAd\bin\Debug\AccountAd.dll
+C:\Users\Trim\source\repos\dz13\AccountAd\bin\Debug\AccountAd.pdb
+C:\Users\Trim\source\repos\dz13\AccountAd\obj\Debug\AccountAd.csprojAssemblyReference.cache
+C:\Users\Trim\source\repos\dz13\AccountAd\obj\Debug\AccountAd.dll
+C:\Users\Trim\source\repos\dz13\AccountAd\obj\Debug\AccountAd.pdb

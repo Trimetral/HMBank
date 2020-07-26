@@ -40,3 +40,11 @@ C:\Users\Trim\source\repos\dz13\dz13\obj\Debug\Transaction.baml
 C:\Users\Trim\source\repos\dz13\dz13\obj\Debug\History.g.cs
 C:\Users\Trim\source\repos\dz13\dz13\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\Trim\source\repos\dz13\dz13\obj\Debug\History.baml
+C:\Users\Trim\source\repos\dz13\dz13\bin\Debug\MainLibrary.dll
+C:\Users\Trim\source\repos\dz13\dz13\bin\Debug\MainLibrary.pdb
+C:\Users\Trim\source\repos\dz13\dz13\bin\Debug\MainLibrary.dll.config
+C:\Users\Trim\source\repos\dz13\dz13\bin\Debug\ExceptionLibrary.dll
+C:\Users\Trim\source\repos\dz13\dz13\bin\Debug\ExceptionLibrary.pdb
+C:\Users\Trim\source\repos\dz13\dz13\bin\Debug\AccountAdLibrary.dll
+C:\Users\Trim\source\repos\dz13\dz13\bin\Debug\AccountAdLibrary.pdb
+C:\Users\Trim\source\repos\dz13\dz13\obj\Debug\dz13.csproj.CoreCompileInputs.cache

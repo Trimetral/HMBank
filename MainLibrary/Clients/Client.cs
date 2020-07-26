@@ -1,12 +1,12 @@
-﻿using MainLibrary.Account;
+﻿using AccountAdLibrary.Account;
+using ExceptionsLibrary.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+
 
 namespace MainLibrary.Clients
 {
@@ -120,24 +120,24 @@ namespace MainLibrary.Clients
         public bool TransToBalance<T>(decimal sum, T sender)
             where T : Client
         {
-            if((this is Person && sender is Entity) ||(this is Entity && sender is Person))
+            if ((this is Person && sender is Entity) || (this is Entity && sender is Person))
             {
-                sender.TransactionError?.Invoke(new Case("Трансакция прервана: блокировака транзакции"));
+                sender.TransactionError?.Invoke(new Case(new BankTransactionException("Трансакция прервана: блокировака транзакции", 1)));
                 return false;
             }
             if (sender.Invoice.Account < sum)
             {
-                sender.TransactionError?.Invoke(new Case("Трансакция прервана: недостаточно средств"));
+                sender.TransactionError?.Invoke(new Case(new BankTransactionException("Трансакция прервана: недостаточно средств", 2)));
                 return false;
             }
             if (sender == this)
             {
-                sender.TransactionError?.Invoke(new Case("Трансакция прервана: ошибка транзакции"));
+                sender.TransactionError?.Invoke(new Case(new BankTransactionException("Трансакция прервана: ошибка транзакции", 3)));
                 return false;
             }
 
-            this.Invoice.AddToBalance(sum * 0.99m, sender); //комиссия 1%
-            sender.Invoice.RemoveFromBalance(sum, this);
+            this.Invoice.AddToBalance(sum * 0.99m, sender.ClientName); //комиссия 1%
+            sender.Invoice.RemoveFromBalance(sum, this.ClientName);
             return true;
         }
         
@@ -151,13 +151,13 @@ namespace MainLibrary.Clients
         {
             if (toDeposit)
             {
-                if (amount > this.Invoice.Account) return false;
+                if (amount > this.Invoice.Account) throw new BankTransactionException("Ошибка перевода, сумма транзакции больше, чем средст на счету", 41);
                 Deposit.Amount += amount;
                 this.Invoice.RemoveFromBalance(amount, Deposit);
             }
             else
             {
-                if (Deposit.Amount < amount) return false;
+                if (Deposit.Amount < amount) throw new BankTransactionException("Ошибка перевода, сумма транзакции больше, чем средст на счету", 42);
                 Deposit.Amount -= amount;
                 this.Invoice.AddToBalance(amount, Deposit);
             }

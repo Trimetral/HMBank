@@ -11,7 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using dz13.Clients;
+using MainLibrary.Clients;
+using AccountAdLibrary.Account;
+
 
 namespace dz13
 {
@@ -83,7 +85,7 @@ namespace dz13
         /// </summary>
         private void bNew_Click(object sender, RoutedEventArgs e)
         {
-            Client.Deposit = new Account.Deposit();
+            Client.Deposit = new Deposit();
             bNew.Visibility = Visibility.Hidden;
             bWid.IsEnabled = true;
             bInc.IsEnabled = true;

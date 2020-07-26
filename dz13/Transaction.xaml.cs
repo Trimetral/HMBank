@@ -1,5 +1,4 @@
-﻿using dz13.Clients;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -13,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MainLibrary.Clients;
 
 namespace dz13
 {
@@ -90,13 +90,14 @@ namespace dz13
             if (isLocal)    //перевод между вкладом и счётом
                 if (MessageBox.Show($"Вы уверены, что хотите совершить данную операцию?", "Подтверждение перевода", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
-                    if (Sender.ManageDeposit((decimal)slAmount.Value, toDeposit))
+                    try
                     {
+                        Sender.ManageDeposit((decimal)slAmount.Value, toDeposit);
                         MessageBox.Show("Перевод выполнен!", "Выполнено", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        MessageBox.Show("Ошибка перевода!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                     Close();
                 }

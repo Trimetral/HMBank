@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MainLibrary.Clients;
+using ExceptionsLibrary.Exceptions;
 
 namespace dz13
 {
@@ -22,7 +24,7 @@ namespace dz13
         /// <summary>
         /// Сформированный клиент для добавления в базу
         /// </summary>
-        public Clients.Client Client { get; set; }
+        public Client Client { get; set; }
 
         /// <summary>
         /// Флаг того, что создание нового клиента было успешно
@@ -42,39 +44,26 @@ namespace dz13
                     surname = tbCSurname.Text.Trim(),
                     adress = tbCAdress.Text.Trim();
 
-                if (name.Length == 0)
+                try
                 {
-                    MessageBox.Show("Введите имя!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
+                    if (name.Length == 0) throw new DataException("Введите имя клиента");
+                    
+                    if (surname.Length == 0) throw new DataException("Введите фамилию клиента");
 
-                if (surname.Length == 0)
+                    if (adress.Length == 0) throw new DataException("Введите адрес клиента");
+                    
+                    if (!decimal.TryParse(tbCInvoice.Text, out decimal invoice) || invoice <= 0) throw new DataException("Введите корректно прибыль");
+
+                    if (!decimal.TryParse(tbCAccount.Text, out decimal account)) throw new DataException("Введите корректно состояние счёта");
+
+                    Client = new Person(name, account, invoice, surname, adress, cbIsVIP.IsChecked == true ? true : false);
+                    Ready = true;
+                    Close();
+                }
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Введите фамилию!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-
-                if (adress.Length == 0)
-                {
-                    MessageBox.Show("Введите адрес!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-
-                if(!decimal.TryParse(tbCInvoice.Text, out decimal invoice) || invoice <= 0)
-                {
-                    MessageBox.Show("Введите корректно прибыль!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-
-                if (!decimal.TryParse(tbCAccount.Text, out decimal account))
-                {
-                    MessageBox.Show("Введите корректно состояние счёта!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-
-                Client = new Clients.Person(name, account, invoice, surname, adress, cbIsVIP.IsChecked == true ? true : false);
-                Ready = true;
-                Close();
             }
 
             if (tabClient.SelectedIndex == 1) //юр.лицо
@@ -120,7 +109,7 @@ namespace dz13
                     return;
                 }
 
-                Client = new Clients.Entity(cname, name, surname, account, invoice, adress);
+                Client = new Entity(cname, name, surname, account, invoice, adress);
                 Ready = true;
                 Close();
             }

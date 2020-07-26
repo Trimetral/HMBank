@@ -1,25 +1,16 @@
-﻿using dz13.Clients;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Data.SqlClient;
+using MainLibrary.Clients;
+using dz13.Functions;
 
 using static dz13.Functions.FunctionsMain;
 
-
 namespace dz13
 {
+
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
@@ -32,6 +23,15 @@ namespace dz13
             InitializeComponent();
             DBClients = new ObservableCollection<Client>();
             dbList.ItemsSource = DBClients;
+            //Task.Delay(5000).ContinueWith(_ => sometest(this.Dispatcher));
+        }
+
+        void CreateSQLManager()
+        {
+            var sqlCon = new SqlConnectionStringBuilder()
+            {
+
+            }
         }
 
         /// <summary>
@@ -68,20 +68,18 @@ namespace dz13
 
         private void dbList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //DataBase.DBClients = DBClients;
             if (dbList.SelectedItem is Client)
             {
-                if(dbList.SelectedItem is Person)
+                (dbList.SelectedItem as Client).FillData(this);
+                if (dbList.SelectedItem is Person)
                 {
                     gridClient.Visibility = Visibility.Visible;
                     gridEntity.Visibility = Visibility.Hidden;
-                    FillPersonData(dbList.SelectedItem as Person, this);
                 }
                 else
                 {
                     gridClient.Visibility = Visibility.Hidden;
                     gridEntity.Visibility = Visibility.Visible;
-                    FillEntityData(dbList.SelectedItem as Entity, this);
                 }
             }
         }
@@ -93,10 +91,8 @@ namespace dz13
         {
             Transaction transaction = new Transaction(dbList.SelectedItem as Client, DBClients);
             transaction.ShowDialog();
-            if (dbList.SelectedItem is Person)
-                FillPersonData(dbList.SelectedItem as Person, this);
-            else
-                FillEntityData(dbList.SelectedItem as Entity, this);
+            (dbList.SelectedItem as Client).FillData(this);
+            
         }
 
         /// <summary>
@@ -108,7 +104,7 @@ namespace dz13
             addNewClient.ShowDialog();
             if (addNewClient.Ready)
             {
-                DBClients.Add(addNewClient.Client);
+                addNewClient.Client.AddToDB(DBClients);
                 MessageBox.Show("Новый клиент добавлен!");
             }
         }
@@ -120,10 +116,7 @@ namespace dz13
         {
             Calculation calculation = new Calculation(dbList.SelectedItem as Client);
             calculation.ShowDialog();
-            if (dbList.SelectedItem is Person)
-                FillPersonData(dbList.SelectedItem as Person, this);
-            else
-                FillEntityData(dbList.SelectedItem as Entity, this);
+            (dbList.SelectedItem as Client).FillData(this);
         }
 
         /// <summary>
@@ -134,5 +127,11 @@ namespace dz13
             History history = new History(dbList.SelectedItem as Client);
             history.Show();
         }
+
+
+        //public static void sometest(Dispatcher window) 
+        //{
+        //    window.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => { DBClients.Add(new Person()); }));
+        //}
     }
 }

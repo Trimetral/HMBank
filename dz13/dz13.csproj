@@ -83,9 +83,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Account\Case.cs" />
-    <Compile Include="Account\Log.cs" />
-    <Compile Include="Account\Invoice.cs" />
+    <Compile Include="Functions\Extensions.cs" />
     <Compile Include="History.xaml.cs">
       <DependentUpon>History.xaml</DependentUpon>
     </Compile>
@@ -108,8 +106,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Account\Credit.cs" />
-    <Compile Include="Account\Deposit.cs" />
     <Compile Include="AddNewClient.xaml.cs">
       <DependentUpon>AddNewClient.xaml</DependentUpon>
     </Compile>
@@ -120,10 +116,6 @@
     <Compile Include="Calculation.xaml.cs">
       <DependentUpon>Calculation.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Clients\Client.cs" />
-    <Compile Include="Clients\ClientsConverter.cs" />
-    <Compile Include="Clients\Entity.cs" />
-    <Compile Include="Clients\Person.cs" />
     <Compile Include="Functions\FunctionsMain.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -160,6 +152,23 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AccountAd\AccountAdLibrary.csproj">
+      <Project>{aae6bd63-b9d4-4c50-8827-9f8710f17862}</Project>
+      <Name>AccountAdLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ExceptionLibrary\ExceptionsLibrary.csproj">
+      <Project>{7a267b32-326d-4220-a40d-d63e2df7b646}</Project>
+      <Name>ExceptionsLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MainLibrary\MainLibrary.csproj">
+      <Project>{0ec737b1-996e-462b-be94-3bac9014dba3}</Project>
+      <Name>MainLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

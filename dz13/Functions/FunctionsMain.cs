@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Xml.Serialization;
+using MainLibrary.Clients;
 
 namespace dz13.Functions
 {
@@ -20,7 +21,7 @@ namespace dz13.Functions
         /// </summary>
         /// <param name="Clients">База данных всех клиентов</param>
         /// <param name="window">Основное окно</param>
-        public static void OpenFile(ref ObservableCollection<Clients.Client> Clients, MainWindow window)
+        public static void OpenFile(ref ObservableCollection<Client> Clients, MainWindow window)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
@@ -36,22 +37,22 @@ namespace dz13.Functions
                     string format = openFileDialog.FileName.Substring(openFileDialog.FileName.LastIndexOf('.'));
                     if (format == ".xml")
                     {
-                        XmlSerializer xmlSerializer = new XmlSerializer(typeof(ObservableCollection<Clients.Client>));
+                        XmlSerializer xmlSerializer = new XmlSerializer(typeof(ObservableCollection<Client>));
                         using (Stream reader = new FileStream(openFileDialog.FileName, FileMode.Open, FileAccess.Read))
                         {
-                            Clients = xmlSerializer.Deserialize(reader) as ObservableCollection<Clients.Client>;
+                            Clients = xmlSerializer.Deserialize(reader) as ObservableCollection<Client>;
                         }
 
                         window.dbList.ItemsSource = Clients;
                     }
                     else if (format == ".json")
                     {
-                        Clients = JsonSerializer.Deserialize<ObservableCollection<Clients.Client>>(
+                        Clients = JsonSerializer.Deserialize<ObservableCollection<Client>>(
                             File.ReadAllText(openFileDialog.FileName),
                             new JsonSerializerOptions()
                             {
                                 WriteIndented = true,
-                                Converters = { new Clients.ClientsConverter() }
+                                Converters = { new ClientsConverter() }
                             });
                         window.dbList.ItemsSource = Clients;
                     }
@@ -67,7 +68,7 @@ namespace dz13.Functions
         /// Сохранение всех данных в файл
         /// </summary>
         /// <param name="Clients">База данных всех клиентов</param>
-        public static void SaveFile(ObservableCollection<Clients.Client> Clients)
+        public static void SaveFile(ObservableCollection<Client> Clients)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog()
             {
@@ -81,7 +82,7 @@ namespace dz13.Functions
                 string format = saveFileDialog.FileName.Substring(saveFileDialog.FileName.LastIndexOf('.'));
                 if (format == ".xml")
                 {
-                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(ObservableCollection<Clients.Client>));
+                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(ObservableCollection<Client>));
                     using (Stream writer = new FileStream(saveFileDialog.FileName, FileMode.Create, FileAccess.Write))
                     {
                         xmlSerializer.Serialize(writer, Clients);
@@ -91,12 +92,12 @@ namespace dz13.Functions
                 }
                 else if (format == ".json")
                 {
-                    File.WriteAllText(saveFileDialog.FileName, JsonSerializer.Serialize<ObservableCollection<Clients.Client>>(
+                    File.WriteAllText(saveFileDialog.FileName, JsonSerializer.Serialize<ObservableCollection<Client>>(
                         Clients,
                         new JsonSerializerOptions()
                         {
                             WriteIndented = true,
-                            Converters = { new Clients.ClientsConverter() }
+                            Converters = { new ClientsConverter() }
                         }));
                     MessageBox.Show("Сохранение успешно");
                 }
@@ -108,7 +109,7 @@ namespace dz13.Functions
         /// </summary>
         /// <param name="client">Клиент</param>
         /// <param name="window">Основное окно</param>
-        public static void FillPersonData(Clients.Person client, MainWindow window)
+        public static void FillPersonData(Person client, MainWindow window)
         {
             window.tbCType.Text = client.Vip ? "Тип: Физ. лицо (VIP)" : "Тип: Физ. лицо";
             window.tbCName.Text = $"Имя: {client.Name}";
@@ -125,8 +126,8 @@ namespace dz13.Functions
         /// </summary>
         /// <param name="client">Клиент</param>
         /// <param name="window">основное окно</param>
-        public static void FillEntityData(Clients.Entity client, MainWindow window)
-        {
+        public static void FillEntityData(Entity client, MainWindow window)
+        { 
             window.tbEType.Text = "Тип: Юр. лицо";
             window.tbEName1.Text = $"Компания: {client.ClientName}";
             window.tbEName.Text = $"Имя директора: {client.DirName}";
