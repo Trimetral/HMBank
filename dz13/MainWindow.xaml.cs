@@ -3,6 +3,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
+using System;
+using AccountAdLibrary.Account;
 using MainLibrary.Clients;
 using dz13.Functions;
 
@@ -17,22 +20,45 @@ namespace dz13
     public partial class MainWindow : Window
     {
         public static ObservableCollection<Client> DBClients;
+        EFManager EFManager;
 
         public MainWindow()
         {
             InitializeComponent();
             DBClients = new ObservableCollection<Client>();
             dbList.ItemsSource = DBClients;
-            //Task.Delay(5000).ContinueWith(_ => sometest(this.Dispatcher));
+
+            StartProgramm();
         }
 
-        void CreateSQLManager()
+        /// <summary>
+        /// Начало программы с возможность выбора источника данных
+        /// </summary>
+        void StartProgramm()
         {
-            var sqlCon = new SqlConnectionStringBuilder()
+            if (MessageBox.Show("Использовать базу данных для программы?", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-
+                try
+                {
+                    EFManager = new EFManager();
+                    EFManager.FillData(DBClients);
+                    MessageBox.Show("Подключение к базе данных успешно.", "Выполнено подключение", MessageBoxButton.OK, MessageBoxImage.Information);
+                    bClear.IsEnabled = false;
+                    bImport.IsEnabled = false;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Подключиться к базе данных не удалось, программа будет работать без базы данных.\r\n{ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
+            else
+            {
+                MessageBox.Show($"Программа будет работать без базы данных.", "Предупреждение", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+
+            SortList();
         }
+
 
         /// <summary>
         /// Очистить БД
@@ -45,25 +71,6 @@ namespace dz13
                 gridEntity.Visibility = Visibility.Hidden;
                 DBClients.Clear();
             }
-        }
-
-        /// <summary>
-        /// Инморт данных
-        /// </summary>
-        private void bImport_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFile(ref DBClients, this);
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(dbList.ItemsSource); //применение сортировки
-            PropertyGroupDescription groupDescription = new PropertyGroupDescription("isPerson");
-            view.GroupDescriptions.Add(groupDescription);
-        }
-
-        /// <summary>
-        /// Экспорт данных
-        /// </summary>
-        private void bExport_Click(object sender, RoutedEventArgs e)
-        {
-            SaveFile(DBClients);
         }
 
         private void dbList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -89,7 +96,7 @@ namespace dz13
         /// </summary>
         private void bTransaction_Click(object sender, RoutedEventArgs e)
         {
-            Transaction transaction = new Transaction(dbList.SelectedItem as Client, DBClients);
+            Transaction transaction = new Transaction(dbList.SelectedItem as Client, DBClients, EFManager);
             transaction.ShowDialog();
             (dbList.SelectedItem as Client).FillData(this);
             
@@ -105,6 +112,7 @@ namespace dz13
             if (addNewClient.Ready)
             {
                 addNewClient.Client.AddToDB(DBClients);
+                if (EFManager != null) EFManager.AddNewClient(addNewClient.Client);
                 MessageBox.Show("Новый клиент добавлен!");
             }
         }
@@ -114,7 +122,7 @@ namespace dz13
         /// </summary>
         private void bDepositTransaction_Click(object sender, RoutedEventArgs e)
         {
-            Calculation calculation = new Calculation(dbList.SelectedItem as Client);
+            Calculation calculation = new Calculation(dbList.SelectedItem as Client, EFManager);
             calculation.ShowDialog();
             (dbList.SelectedItem as Client).FillData(this);
         }
@@ -128,10 +136,32 @@ namespace dz13
             history.Show();
         }
 
+        /// <summary>
+        /// Кнопка импорта данных в программу
+        /// </summary>
+        private void bImport_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFile(ref DBClients, this);
+            SortList();
+        }
 
-        //public static void sometest(Dispatcher window) 
-        //{
-        //    window.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() => { DBClients.Add(new Person()); }));
-        //}
+        /// <summary>
+        /// Кнопка экспорта данных в программу
+        /// </summary>
+        private void bExport_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFile(DBClients);
+        }
+
+        /// <summary>
+        /// Отсортировать список клиентов по тому, являются ли они физ/юр лицами
+        /// </summary>
+        void SortList()
+        {
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(dbList.ItemsSource); //применение сортировки
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("IsPerson");
+            view.GroupDescriptions.Add(groupDescription);
+        }
+
     }
 }

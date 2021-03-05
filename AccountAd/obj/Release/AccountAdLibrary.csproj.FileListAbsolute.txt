@@ -1,0 +1,6 @@
+C:\Users\Trim\source\repos\dz13\AccountAd\bin\Release\AccountAdLibrary.dll
+C:\Users\Trim\source\repos\dz13\AccountAd\bin\Release\AccountAdLibrary.pdb
+C:\Users\Trim\source\repos\dz13\AccountAd\obj\Release\AccountAdLibrary.csprojAssemblyReference.cache
+C:\Users\Trim\source\repos\dz13\AccountAd\obj\Release\AccountAdLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Trim\source\repos\dz13\AccountAd\obj\Release\AccountAdLibrary.dll
+C:\Users\Trim\source\repos\dz13\AccountAd\obj\Release\AccountAdLibrary.pdb

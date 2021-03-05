@@ -47,9 +47,9 @@ namespace AccountAdLibrary.Account
         /// <param name="clientName">Второй клиент</param>
         /// <param name="direction">true - перевод на этот счёт, false - перевод на счёт другого клиента</param>
         /// <param name="amount">Сумма перевода</param>
-        public Case(string clientName, bool direction, decimal amount)
+        public Case(string clientName, bool direction, decimal amount, DateTime time)
         {
-            Time = DateTime.Now;
+            Time = time;
             ClientName = clientName;
             Direction = direction;
             Amount = amount;
@@ -60,9 +60,9 @@ namespace AccountAdLibrary.Account
         /// </summary>
         /// <param name="direction">true - на счёт, false - на вклад</param>
         /// <param name="amount">Сумма перевода</param>
-        public Case(bool direction, decimal amount)
+        public Case(bool direction, decimal amount, DateTime time)
         {
-            Time = DateTime.Now;
+            Time = time;
             Direction = direction;
             Amount = amount;
         }
@@ -71,29 +71,29 @@ namespace AccountAdLibrary.Account
         /// Ошибка перевода
         /// </summary>
         /// <param name="errorMsg">Текст ошибки</param>
-        public Case(Exception exception)
+        public Case(Exception exception, DateTime time)
         {
-            Time = DateTime.Now;
+            Time = time;
             Message = exception.Message;
         }
 
 
         public override string ToString()
         {
-            if (Message != null) return $"{Time.ToString("dd.MM.yyyy [HH:mm]")} {Message}";
+            if (Message != null) return $"{Time:dd.MM.yyyy [HH:mm]} {Message}";
             if (ClientName != null)
             {
                 if (Direction)
-                    return $"{Time.ToString("dd.MM.yyyy [HH:mm]")} пополнение счёта на {Amount} от {ClientName}";
+                    return $"{Time:dd.MM.yyyy [HH:mm]} пополнение счёта на {Amount:0.00} от {ClientName}";
                 else
-                    return $"{Time.ToString("dd.MM.yyyy [HH:mm]")} списание со счёта на {Amount} на счёт {ClientName}";
+                    return $"{Time:dd.MM.yyyy [HH:mm]} списание со счёта на {Amount:0.00} на счёт {ClientName}";
             }
             else
             {
                 if (Direction)
-                    return $"{Time.ToString("dd.MM.yyyy [HH:mm]")} пополнение счёта на {Amount} со счёта вклада";
+                    return $"{Time:dd.MM.yyyy [HH:mm]} пополнение счёта на {Amount:0.00} со счёта вклада";
                 else
-                    return $"{Time.ToString("dd.MM.yyyy [HH:mm]")} списание со счёта на {Amount} на счёт вклада";
+                    return $"{Time:dd.MM.yyyy [HH:mm]} списание со счёта на {Amount:0.00} на счёт вклада";
             }
         }
     }

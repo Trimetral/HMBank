@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище BankDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="idClient" />
+          </Key>
+          <Property Name="idClient" Type="nvarchar" MaxLength="4" Nullable="false" />
+          <Property Name="clientName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="isPerson" Type="bit" Nullable="false" />
+          <Property Name="adress" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="account" Type="float" Nullable="false" />
+          <Property Name="invoice" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Deposits">
+          <Key>
+            <PropertyRef Name="idClient" />
+          </Key>
+          <Property Name="idClient" Type="nvarchar" MaxLength="4" Nullable="false" />
+          <Property Name="amount" Type="float" Nullable="false" />
+          <Property Name="percent" Type="float" Nullable="false" />
+          <Property Name="isCapitalised" Type="bit" Nullable="false" />
+          <Property Name="isOpened" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Entity">
+          <Key>
+            <PropertyRef Name="idClient" />
+          </Key>
+          <Property Name="idClient" Type="nvarchar" MaxLength="4" Nullable="false" />
+          <Property Name="dirName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="dirSurname" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Logs">
+          <Key>
+            <PropertyRef Name="idLog" />
+          </Key>
+          <Property Name="idLog" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idClient" Type="nvarchar" MaxLength="4" Nullable="false" />
+          <Property Name="time" Type="datetime" Nullable="false" />
+          <Property Name="idReciever" Type="nvarchar" MaxLength="4" />
+          <Property Name="amount" Type="float" />
+          <Property Name="direction" Type="bit" />
+          <Property Name="message" Type="nvarchar" MaxLength="80" />
+        </EntityType>
+        <EntityType Name="Persons">
+          <Key>
+            <PropertyRef Name="idClient" />
+          </Key>
+          <Property Name="idClient" Type="nvarchar" MaxLength="4" Nullable="false" />
+          <Property Name="cName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="isVip" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="Хранилище BankDBModelContainer">
+          <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Deposits" EntityType="Self.Deposits" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Entity" EntityType="Self.Entity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Persons" EntityType="Self.Persons" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BankDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="idClient" />
+          </Key>
+          <Property Name="idClient" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="clientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="isPerson" Type="Boolean" Nullable="false" />
+          <Property Name="adress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="account" Type="Double" Nullable="false" />
+          <Property Name="invoice" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Deposits">
+          <Key>
+            <PropertyRef Name="idClient" />
+          </Key>
+          <Property Name="idClient" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="amount" Type="Double" Nullable="false" />
+          <Property Name="percent" Type="Double" Nullable="false" />
+          <Property Name="isCapitalised" Type="Boolean" Nullable="false" />
+          <Property Name="isOpened" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Entity">
+          <Key>
+            <PropertyRef Name="idClient" />
+          </Key>
+          <Property Name="idClient" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dirName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dirSurname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Logs">
+          <Key>
+            <PropertyRef Name="idLog" />
+          </Key>
+          <Property Name="idLog" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idClient" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="idReciever" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="amount" Type="Double" />
+          <Property Name="direction" Type="Boolean" />
+          <Property Name="message" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Persons">
+          <Key>
+            <PropertyRef Name="idClient" />
+          </Key>
+          <Property Name="idClient" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="cName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="isVip" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="BankDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clients" EntityType="Self.Clients" />
+          <EntitySet Name="Deposits" EntityType="Self.Deposits" />
+          <EntitySet Name="Entity" EntityType="Self.Entity" />
+          <EntitySet Name="Logs" EntityType="Self.Logs" />
+          <EntitySet Name="Persons" EntityType="Self.Persons" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище BankDBModelContainer" CdmEntityContainer="BankDBEntities">
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="BankDBModel.Clients">
+              <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="idClient" ColumnName="idClient" />
+                <ScalarProperty Name="clientName" ColumnName="clientName" />
+                <ScalarProperty Name="isPerson" ColumnName="isPerson" />
+                <ScalarProperty Name="adress" ColumnName="adress" />
+                <ScalarProperty Name="account" ColumnName="account" />
+                <ScalarProperty Name="invoice" ColumnName="invoice" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Deposits">
+            <EntityTypeMapping TypeName="BankDBModel.Deposits">
+              <MappingFragment StoreEntitySet="Deposits">
+                <ScalarProperty Name="idClient" ColumnName="idClient" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="percent" ColumnName="percent" />
+                <ScalarProperty Name="isCapitalised" ColumnName="isCapitalised" />
+                <ScalarProperty Name="isOpened" ColumnName="isOpened" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Entity">
+            <EntityTypeMapping TypeName="BankDBModel.Entity">
+              <MappingFragment StoreEntitySet="Entity">
+                <ScalarProperty Name="idClient" ColumnName="idClient" />
+                <ScalarProperty Name="dirName" ColumnName="dirName" />
+                <ScalarProperty Name="dirSurname" ColumnName="dirSurname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Logs">
+            <EntityTypeMapping TypeName="BankDBModel.Logs">
+              <MappingFragment StoreEntitySet="Logs">
+                <ScalarProperty Name="idLog" ColumnName="idLog" />
+                <ScalarProperty Name="idClient" ColumnName="idClient" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="idReciever" ColumnName="idReciever" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="direction" ColumnName="direction" />
+                <ScalarProperty Name="message" ColumnName="message" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Persons">
+            <EntityTypeMapping TypeName="BankDBModel.Persons">
+              <MappingFragment StoreEntitySet="Persons">
+                <ScalarProperty Name="idClient" ColumnName="idClient" />
+                <ScalarProperty Name="cName" ColumnName="cName" />
+                <ScalarProperty Name="isVip" ColumnName="isVip" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

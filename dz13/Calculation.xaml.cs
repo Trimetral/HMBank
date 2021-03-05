@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MainLibrary.Clients;
 using AccountAdLibrary.Account;
-
+using dz13.Functions;
 
 namespace dz13
 {
@@ -23,13 +23,16 @@ namespace dz13
     public partial class Calculation : Window
     {
         Client Client { get; set; }
-        public Calculation(Client client)
+        EFManager EFManager { get; set; }
+
+        public Calculation(Client client, EFManager efManager)
         {
             InitializeComponent();
             Client = client;
             tbDr.Text = "Год";
+            EFManager = efManager;
 
-            if (client.Deposit == null) //если вклада нет
+            if (!client.Deposit.IsOpend) //если вклада нет
             {
                 bWid.IsEnabled = false;
                 bInc.IsEnabled = false;
@@ -40,7 +43,7 @@ namespace dz13
             else //есели вклад уже есть, то загрузить информацию о нём
             {
                 bNew.Visibility = Visibility.Hidden;
-                tbInv.Text = $"Баланс: {Client.Deposit.Amount.ToString("0.##")}";
+                tbInv.Text = $"Баланс: {Client.Deposit.Amount:0.##}";
                 cbCapit.IsChecked = client.Deposit.IsCapitilised;
                 cbArg.ItemsSource = new List<double>() { client.Deposit.Percent };
                 cbArg.SelectedIndex = 0;
@@ -68,16 +71,16 @@ namespace dz13
 
         private void bWid_Click(object sender, RoutedEventArgs e)
         {
-            Transaction transaction = new Transaction(Client, null, true, true);
+            Transaction transaction = new Transaction(Client, null, EFManager, true, true);
             transaction.ShowDialog();
-            tbInv.Text = $"Баланс: {Client.Deposit.Amount.ToString("0.##")}";
+            tbInv.Text = $"Баланс: {Client.Deposit.Amount:0.##}";
         }
 
         private void bInc_Click(object sender, RoutedEventArgs e)
         {
-            Transaction transaction = new Transaction(Client, null, true, false);
+            Transaction transaction = new Transaction(Client, null, EFManager, true, false);
             transaction.ShowDialog();
-            tbInv.Text = $"Баланс: {Client.Deposit.Amount.ToString("0.##")}";
+            tbInv.Text = $"Баланс: {Client.Deposit.Amount:0.##}";
         }
 
         /// <summary>
@@ -85,7 +88,7 @@ namespace dz13
         /// </summary>
         private void bNew_Click(object sender, RoutedEventArgs e)
         {
-            Client.Deposit = new Deposit();
+            Client.Deposit.IsOpend = true;
             bNew.Visibility = Visibility.Hidden;
             bWid.IsEnabled = true;
             bInc.IsEnabled = true;
@@ -93,6 +96,8 @@ namespace dz13
             cbCapit.IsEnabled = true;
             cbArg.IsEnabled = true;
             tbInv.Text = "Баланс: 0";
+
+            if (EFManager != null) EFManager.UpdateDeposit(Client);
         }
 
         private void cbCapit_Checked(object sender, RoutedEventArgs e)
@@ -148,6 +153,15 @@ namespace dz13
         private void bQuit_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (EFManager != null)
+                if (bNew.Visibility == Visibility.Hidden)
+                {
+                    EFManager.UpdateDeposit(Client);
+                }
         }
     }
 }

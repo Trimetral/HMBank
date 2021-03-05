@@ -10,7 +10,11 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Xml.Serialization;
+using System.Data.SqlClient;
 using MainLibrary.Clients;
+using AccountAdLibrary.Account;
+using ExceptionsLibrary.Exceptions;
+using System.Diagnostics;
 
 namespace dz13.Functions
 {
@@ -115,28 +119,30 @@ namespace dz13.Functions
             window.tbCName.Text = $"Имя: {client.Name}";
             window.tbCSurname.Text = $"Фамилия: {client.ClientName}";
             window.tbCAdress.Text = $"Адрес: {client.Address}";
-            window.tbCInvoice.Text = $"Прибыль: {client.Invoice.Earning.ToString("#.##")}";
-            window.tbCAccount.Text = $"Состояние счёта: {client.Invoice}";
-            window.tbCDeposit.Text = client.Deposit == null ? "Нет" : $"Счёт: {client.Deposit.Amount} под {client.Deposit.Percent}%";
+            window.tbCInvoice.Text = $"Прибыль: {client.Invoice.Earning:0.##}";
+            window.tbCAccount.Text = $"Состояние счёта: {client.Invoice:0.##}";
+            window.tbCDeposit.Text = client.Deposit.IsOpend ? $"Счёт: {client.Deposit.Amount:0.##} под {client.Deposit.Percent:0.00}%" : "Нет";
             if (client.Deposit != null && client.Deposit.IsCapitilised) window.tbCDeposit.Text += " с капит.";
         }
+
 
         /// <summary>
         /// Заполнить данные юр. лица в окно
         /// </summary>
         /// <param name="client">Клиент</param>
         /// <param name="window">основное окно</param>
-        public static void FillEntityData(Entity client, MainWindow window)
+        public static void FillEntityData(MainLibrary.Clients.Entity client, MainWindow window)
         { 
             window.tbEType.Text = "Тип: Юр. лицо";
             window.tbEName1.Text = $"Компания: {client.ClientName}";
             window.tbEName.Text = $"Имя директора: {client.DirName}";
             window.tbESurname.Text = $"Фамилия директора: {client.DirSurname}";
             window.tbEAdress.Text = $"Адрес: {client.Address}";
-            window.tbEInvoice.Text = $"Прибыль: {client.Invoice.Earning.ToString("#.##")}";
-            window.tbEAccount.Text = $"Состояние счёта: {client.Invoice}";
-            window.tbEDeposit.Text = client.Deposit == null ? "Нет" : $"Счёт: {client.Deposit.Amount} под {client.Deposit.Percent}%";
+            window.tbEInvoice.Text = $"Прибыль: {client.Invoice.Earning:0.##}";
+            window.tbEAccount.Text = $"Состояние счёта: {client.Invoice:0.##}";
+            window.tbEDeposit.Text = client.Deposit.IsOpend ?$"Счёт: {client.Deposit.Amount:0.##} под {client.Deposit.Percent:0.00}%" : "Нет";
             if (client.Deposit != null && client.Deposit.IsCapitilised) window.tbEDeposit.Text += " с капит.";
         }
+
     }
 }

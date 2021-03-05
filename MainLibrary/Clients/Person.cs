@@ -11,10 +11,13 @@ namespace MainLibrary.Clients
     /// </summary>
     public class Person : Client
     {
-        public string isPerson { get => "Физ. лицо"; }
+        /// <summary>
+        /// Флаг для отображения в таблице
+        /// </summary>
+        public string IsPerson => "Физ. лицо";
 
         /// <summary>
-        /// Фамилия клиента
+        /// Имя клиента
         /// </summary>
         public string Name { get; set; }
 
@@ -32,20 +35,13 @@ namespace MainLibrary.Clients
         /// <param name="pSurname">Фамилия клиента</param>
         /// <param name="address">Адрес клиента</param>
         /// <param name="vip">ВИП статус</param>
-        public Person(string pName, decimal account, decimal invoice, string pSurname = "PersonSurname", string address = "n/a", bool vip = false) : base(account, invoice, address, pSurname)
-        {
-            this.Name = pName;
-            this.Vip = vip;
-        }
+        public Person(string pName, decimal account, decimal invoice, string id, string pSurname = "PersonSurname", string address = "n/a", bool vip = false)
+            : base(account, invoice, address, pSurname, id) => (Name, Vip) = (pName, vip);
 
         /// <summary>
         /// Физ. лицо
         /// </summary>
-        public Person() : base (0, 0, "n/a", "PersonSurname")
-        {
-            this.Name = "PersonName";
-            this.Vip = false;
-        }
+        public Person() : base (0, 0, "n/a", "PersonSurname", "") => (Name, Vip) = ("PersonName", false);
 
     }
 }

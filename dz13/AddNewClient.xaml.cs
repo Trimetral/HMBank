@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MainLibrary.Clients;
 using ExceptionsLibrary.Exceptions;
+using MainLibrary;
 
 namespace dz13
 {
@@ -56,7 +57,15 @@ namespace dz13
 
                     if (!decimal.TryParse(tbCAccount.Text, out decimal account)) throw new DataException("Введите корректно состояние счёта");
 
-                    Client = new Person(name, account, invoice, surname, adress, cbIsVIP.IsChecked == true ? true : false);
+                    Client = ClientsFactory.CreateNewClient(
+                        ClientsFactory.ClientType.Person,
+                        account,
+                        invoice,
+                        adress,
+                        surname,
+                        "", //ID пустой, т.к. для нового клиента он генерируется
+                        name,
+                        cbIsVIP.IsChecked == true ? true : false);
                     Ready = true;
                     Close();
                 }
@@ -109,7 +118,15 @@ namespace dz13
                     return;
                 }
 
-                Client = new Entity(cname, name, surname, account, invoice, adress);
+                Client = ClientsFactory.CreateNewClient(
+                        ClientsFactory.ClientType.Entity,
+                        account,
+                        invoice,
+                        adress,
+                        cname,
+                        "", //ID пустой, т.к. для нового клиента он генерируется
+                        directorName: name,
+                        directorSurname: surname);
                 Ready = true;
                 Close();
             }

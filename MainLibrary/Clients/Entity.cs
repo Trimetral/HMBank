@@ -11,7 +11,10 @@ namespace MainLibrary.Clients
     /// </summary>
     public class Entity : Client
     {
-        public string isPerson { get => "Юр. лицо"; }
+        /// <summary>
+        /// Флаг для отображения в таблице
+        /// </summary>
+        public string IsPerson => "Юр. лицо";
 
         /// <summary>
         /// Имя директора
@@ -32,20 +35,14 @@ namespace MainLibrary.Clients
         /// <param name="account">Состояние счёта компании</param>
         /// <param name="invoice">Прибыль комании</param>
         /// <param name="address">Адрес компании</param>
-        public Entity(string envName, string dirName, string dirSurname, decimal account, decimal invoice, string address = "n/a") : base(account, invoice, address, envName)
-        {
-            this.DirName = dirName;
-            this.DirSurname = dirSurname;
-        }
+        public Entity(string envName, string dirName, string dirSurname, decimal account, decimal invoice, string id, string address = "n/a") 
+            : base(account, invoice, address, envName, id) => (DirName, DirSurname) = (dirName, dirSurname);
+
 
         /// <summary>
         /// Юр. лицо
         /// </summary>
-        public Entity() : base(0, 0, "n/a", "entityName")
-        {
-            this.DirName = "dirName";
-            this.DirSurname = "dirSurname";
-        }
+        public Entity() : base(0, 0, "n/a", "entityName", "") => (DirName, DirSurname) = ("dirName", "dirSurname");
 
     }
 }

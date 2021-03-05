@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
-        Title="Calculation" Height="596.706" Width="322.688">
+        Title="Calculation" Height="596.706" Width="322.688" Closing="Window_Closing">
     <Grid>
         <StackPanel Orientation="Vertical">
 

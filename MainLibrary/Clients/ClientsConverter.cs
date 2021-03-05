@@ -10,6 +10,9 @@ namespace MainLibrary.Clients
 {
     public class ClientsConverter : JsonConverter<Client>
     {
+        /// <summary>
+        /// Тип клиента (физ/юр лицо)
+        /// </summary>
         private enum TypeDiscriminator
         {
             Person = 0,
@@ -105,4 +108,3 @@ namespace MainLibrary.Clients
         }
     }
 }
-

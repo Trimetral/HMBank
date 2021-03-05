@@ -17,7 +17,7 @@ namespace MainLibrary.Clients
     [XmlInclude(typeof(Entity))]
     public abstract class Client
     {
-        string id;
+        string id = "-1";
 
         /// <summary>
         /// Индивидуальный ID для всех клиентов
@@ -47,13 +47,12 @@ namespace MainLibrary.Clients
         /// <summary>
         /// Вклад
         /// </summary>
-        public Deposit Deposit { get; set; }
+        public Deposit Deposit { get; set; } = new Deposit();
 
         /// <summary>
         /// История аккаунта клиента
         /// </summary>
         public Log Logs { get; set; }
-
 
         /// <summary>
         /// Счёт клиента
@@ -69,8 +68,8 @@ namespace MainLibrary.Clients
             } 
         }
         
-        Invoice invoice;
-                     
+        Invoice invoice = new Invoice();
+
         /// <summary>
         /// Коллекция ID клиентов
         /// </summary>
@@ -80,7 +79,6 @@ namespace MainLibrary.Clients
         {
             ClientsIDs = new List<string>();
         }
-
 
         /// <summary>
         /// Событие ошибки транзакции
@@ -94,19 +92,26 @@ namespace MainLibrary.Clients
         /// <param name="invoice">Прибыль клиента</param>
         /// <param name="address">Адрес клиента</param>
         /// <param name="name">Фамилия клиента (название компании)</param>
-        public Client(decimal account, decimal invoice, string address, string name)
+        public Client(decimal account, decimal invoice, string address, string name, string id)
         {
             Address = address;
             ClientName = name;
             Logs = new Log();
             Invoice = new Invoice(account, invoice);
 
-            while (true)
+            if (string.IsNullOrEmpty(id))
             {
-                string newID = Guid.NewGuid().ToString().Substring(0, 5);
-                if (ClientsIDs.Contains(newID)) continue;
-                ID = newID;
-                break;
+                while (true)
+                {
+                    string newID = Guid.NewGuid().ToString().Substring(0, 4);
+                    if (ClientsIDs.Contains(newID)) continue;
+                    ID = newID;
+                    break;
+                }
+            }
+            else
+            {
+                ID = id;
             }
         }
 
@@ -117,27 +122,30 @@ namespace MainLibrary.Clients
         /// <param name="sum">Сумма</param>
         /// <param name="sender">Отправитель</param>
         /// <returns>Успешно ли прошла операция</returns>
-        public bool TransToBalance<T>(decimal sum, T sender)
+        public bool TransToBalance<T>(decimal sum, T sender, ref string msg)
             where T : Client
         {
             if ((this is Person && sender is Entity) || (this is Entity && sender is Person))
             {
-                sender.TransactionError?.Invoke(new Case(new BankTransactionException("Трансакция прервана: блокировака транзакции", 1)));
+                sender.TransactionError?.Invoke(new Case(new BankTransactionException("Трансакция прервана: блокировака транзакции"), DateTime.Now));
+                msg = "Трансакция прервана: блокировака транзакции";
                 return false;
             }
             if (sender.Invoice.Account < sum)
             {
-                sender.TransactionError?.Invoke(new Case(new BankTransactionException("Трансакция прервана: недостаточно средств", 2)));
+                sender.TransactionError?.Invoke(new Case(new BankTransactionException("Трансакция прервана: недостаточно средств"), DateTime.Now));
+                msg = "Трансакция прервана: недостаточно средств";
                 return false;
             }
             if (sender == this)
             {
-                sender.TransactionError?.Invoke(new Case(new BankTransactionException("Трансакция прервана: ошибка транзакции", 3)));
+                sender.TransactionError?.Invoke(new Case(new BankTransactionException("Трансакция прервана: ошибка транзакции"), DateTime.Now));
+                msg = "Трансакция прервана: ошибка транзакции";
                 return false;
             }
 
-            this.Invoice.AddToBalance(sum * 0.99m, sender.ClientName); //комиссия 1%
-            sender.Invoice.RemoveFromBalance(sum, this.ClientName);
+            Invoice.AddToBalance(sum * 0.99m, sender.ClientName); //комиссия 1%
+            sender.Invoice.RemoveFromBalance(sum, ClientName);
             return true;
         }
         
@@ -151,15 +159,19 @@ namespace MainLibrary.Clients
         {
             if (toDeposit)
             {
-                if (amount > this.Invoice.Account) throw new BankTransactionException("Ошибка перевода, сумма транзакции больше, чем средст на счету", 41);
-                Deposit.Amount += amount;
-                this.Invoice.RemoveFromBalance(amount, Deposit);
+                if (amount > Invoice.Account)
+                {
+                    throw new BankTransactionException("Ошибка перевода, сумма транзакции больше, чем средст на счету");
+                }
+                Invoice.RemoveFromBalance(amount, Deposit);
             }
             else
             {
-                if (Deposit.Amount < amount) throw new BankTransactionException("Ошибка перевода, сумма транзакции больше, чем средст на счету", 42);
-                Deposit.Amount -= amount;
-                this.Invoice.AddToBalance(amount, Deposit);
+                if (Deposit.Amount < amount)
+                {
+                    throw new BankTransactionException("Ошибка перевода, сумма транзакции больше, чем средст на счету");
+                }
+                Invoice.AddToBalance(amount, Deposit);
             }
             return true;
         }

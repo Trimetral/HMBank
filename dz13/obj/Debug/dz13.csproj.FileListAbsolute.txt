@@ -48,3 +48,9 @@ C:\Users\Trim\source\repos\dz13\dz13\bin\Debug\ExceptionLibrary.pdb
 C:\Users\Trim\source\repos\dz13\dz13\bin\Debug\AccountAdLibrary.dll
 C:\Users\Trim\source\repos\dz13\dz13\bin\Debug\AccountAdLibrary.pdb
 C:\Users\Trim\source\repos\dz13\dz13\obj\Debug\dz13.csproj.CoreCompileInputs.cache
+C:\Users\Trim\source\repos\dz13\dz13\bin\Debug\EntityFramework.dll
+C:\Users\Trim\source\repos\dz13\dz13\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Trim\source\repos\dz13\dz13\bin\Debug\EntityFramework.xml
+C:\Users\Trim\source\repos\dz13\dz13\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Trim\source\repos\dz13\dz13\bin\Debug\ru\EntityFramework.resources.dll
+C:\Users\Trim\source\repos\dz13\dz13\obj\Debug\dz13_Content.g.cs

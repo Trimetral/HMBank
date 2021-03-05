@@ -20,10 +20,10 @@ namespace AccountAdLibrary.Account
         /// <summary>
         /// Добавить в историю событие
         /// </summary>
-        /// <param name="case">Новое событие</param>
-        public void AddToHistory (Case @case)
+        /// <param name="somecase">Новое событие</param>
+        public void AddToHistory (Case somecase)
         {
-            Cases.Add(@case);
+            Cases.Add(somecase);
         }
 
         /// <summary>

@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище BankDBModelContainer" CdmEntityContainer="BankDB">
+    <EntitySetMapping Name="Clients">
+      <EntityTypeMapping TypeName="BankDBModel.Clients">
+        <MappingFragment StoreEntitySet="Clients">
+          <ScalarProperty Name="idClient" ColumnName="idClient" />
+          <ScalarProperty Name="clientName" ColumnName="clientName" />
+          <ScalarProperty Name="isPerson" ColumnName="isPerson" />
+          <ScalarProperty Name="adress" ColumnName="adress" />
+          <ScalarProperty Name="invoice" ColumnName="invoice" />
+          <ScalarProperty Name="earning" ColumnName="earning" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Deposits">
+      <EntityTypeMapping TypeName="BankDBModel.Deposits">
+        <MappingFragment StoreEntitySet="Deposits">
+          <ScalarProperty Name="idClient" ColumnName="idClient" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="percent" ColumnName="percent" />
+          <ScalarProperty Name="isCapitalised" ColumnName="isCapitalised" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Entity">
+      <EntityTypeMapping TypeName="BankDBModel.Entity">
+        <MappingFragment StoreEntitySet="Entity">
+          <ScalarProperty Name="idClient" ColumnName="idClient" />
+          <ScalarProperty Name="dirName" ColumnName="dirName" />
+          <ScalarProperty Name="dirSurname" ColumnName="dirSurname" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Logs">
+      <EntityTypeMapping TypeName="BankDBModel.Logs">
+        <MappingFragment StoreEntitySet="Logs">
+          <ScalarProperty Name="idLog" ColumnName="idLog" />
+          <ScalarProperty Name="idClient" ColumnName="idClient" />
+          <ScalarProperty Name="time" ColumnName="time" />
+          <ScalarProperty Name="idReciever" ColumnName="idReciever" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="direction" ColumnName="direction" />
+          <ScalarProperty Name="message" ColumnName="message" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Persons">
+      <EntityTypeMapping TypeName="BankDBModel.Persons">
+        <MappingFragment StoreEntitySet="Persons">
+          <ScalarProperty Name="idClient" ColumnName="idClient" />
+          <ScalarProperty Name="cName" ColumnName="cName" />
+          <ScalarProperty Name="isVip" ColumnName="isVip" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

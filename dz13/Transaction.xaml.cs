@@ -12,7 +12,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using dz13.Functions;
 using MainLibrary.Clients;
+
 
 namespace dz13
 {
@@ -24,6 +26,8 @@ namespace dz13
         Client Sender { get; set; }
         Client Reciever { get; set; }
         ObservableCollection<Client> DB { get; set; }
+        
+        EFManager EFManager { get; set; }
 
         bool isLocal, toDeposit;
 
@@ -35,12 +39,13 @@ namespace dz13
         /// <param name="clients">Возможные получатели</param>
         /// <param name="local">Если перевод связан со вкладом</param>
         /// <param name="toDeposit">true - перевод со счёта на вклад, false - обратно</param>
-        public Transaction(Client sender, ObservableCollection<Client> clients, bool local = false, bool toDeposit = true)
+        public Transaction(Client sender, ObservableCollection<Client> clients, EFManager efManager, bool local = false, bool toDeposit = true)
         {
             InitializeComponent();
             isLocal = local;
             this.toDeposit = toDeposit;
             Sender = sender;
+            EFManager = efManager;
 
             if (isLocal)
             {
@@ -80,7 +85,7 @@ namespace dz13
 
         private void slAmount_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            tbAmount.Text = slAmount.Value.ToString("#.##");
+            tbAmount.Text = slAmount.Value.ToString("0.##");
         }
 
         private void bAccept_Click(object sender, RoutedEventArgs e)
@@ -88,11 +93,14 @@ namespace dz13
             if (slAmount.Value == 0) return;
 
             if (isLocal)    //перевод между вкладом и счётом
-                if (MessageBox.Show($"Вы уверены, что хотите совершить данную операцию?", "Подтверждение перевода", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                if (MessageBox.Show($"Вы уверены, что хотите совершить данную операцию?", "Подтверждение перевода", 
+                    MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     try
                     {
-                        Sender.ManageDeposit((decimal)slAmount.Value, toDeposit);
+                        decimal amount = (decimal)slAmount.Value;
+                        Sender.ManageDeposit(amount, toDeposit);
+                        if (EFManager != null) EFManager.UpdateAccountDepositLog(Sender, amount, toDeposit);
                         MessageBox.Show("Перевод выполнен!", "Выполнено", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     catch (Exception ex)
@@ -109,14 +117,19 @@ namespace dz13
             if (cbReciever.SelectedIndex == -1) return;
 
             //перевод между клиентами
-            if (MessageBox.Show($"Вы уверены, что хотите перевести {slAmount.Value.ToString("#.##")} на счёт {Reciever.ClientName}?\r\nКомиссия 1%", "Подтверждение перевода", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            if (MessageBox.Show($"Вы уверены, что хотите перевести {slAmount.Value:#.##} на счёт {Reciever.ClientName}?\r\nКомиссия 1%", "Подтверждение перевода", 
+                MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                if(Reciever.TransToBalance((decimal)slAmount.Value, Sender))
+                string msg = string.Empty;
+                decimal amount = (decimal)slAmount.Value;
+                if (Reciever.TransToBalance(amount, Sender, ref msg))
                 {
+                    if (EFManager != null) EFManager.TransactionSucessful(Sender, Reciever, amount);
                     MessageBox.Show("Перевод выполнен!", "Выполнено", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
+                    if (EFManager != null) EFManager.TransactionError(Sender, msg);
                     MessageBox.Show("Ошибка перевода!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 Close();

@@ -12,18 +12,12 @@ namespace ExceptionsLibrary.Exceptions
     public class BankTransactionException : Exception
     {
         /// <summary>
-        /// Код ошибки
-        /// </summary>
-        public int ErrorCode { get; set; }
-
-        /// <summary>
         /// Ошибка транзакции
         /// </summary>
         /// <param name="message">Сообщение ошибки</param>
-        /// <param name="code">Код ошибки</param>
-        public BankTransactionException(string message, int code) : base(message)
+        public BankTransactionException(string message) : base(message)
         {
-            ErrorCode = code;
+            
         }
     }
 }

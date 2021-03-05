@@ -32,7 +32,7 @@ namespace dz13.Functions
             if (client is Person)
                 FillPersonData(client as Person, window);
             else
-                FillEntityData(client as Entity, window);
+                FillEntityData(client as MainLibrary.Clients.Entity, window);
         }
     }
 }

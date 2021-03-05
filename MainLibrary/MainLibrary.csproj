@@ -69,9 +69,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientsFactory.cs" />
     <Compile Include="Clients\Client.cs" />
     <Compile Include="Clients\ClientsConverter.cs" />
     <Compile Include="Clients\Entity.cs" />
+    <Compile Include="Clients\NullClient.cs" />
     <Compile Include="Clients\Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

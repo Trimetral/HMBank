@@ -1,0 +1,6 @@
+C:\Users\Trim\source\repos\dz13\ExceptionLibrary\bin\Release\ExceptionLibrary.dll
+C:\Users\Trim\source\repos\dz13\ExceptionLibrary\bin\Release\ExceptionLibrary.pdb
+C:\Users\Trim\source\repos\dz13\ExceptionLibrary\obj\Release\ExceptionsLibrary.csprojAssemblyReference.cache
+C:\Users\Trim\source\repos\dz13\ExceptionLibrary\obj\Release\ExceptionsLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Trim\source\repos\dz13\ExceptionLibrary\obj\Release\ExceptionLibrary.dll
+C:\Users\Trim\source\repos\dz13\ExceptionLibrary\obj\Release\ExceptionLibrary.pdb

@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище BankDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Clients">
+    <Key>
+      <PropertyRef Name="idClient" />
+    </Key>
+    <Property Name="idClient" Type="nvarchar" MaxLength="4" Nullable="false" />
+    <Property Name="clientName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="isPerson" Type="bit" Nullable="false" />
+    <Property Name="adress" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="account" Type="float" Nullable="false" />
+    <Property Name="invoice" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Deposits">
+    <Key>
+      <PropertyRef Name="idClient" />
+    </Key>
+    <Property Name="idClient" Type="nvarchar" MaxLength="4" Nullable="false" />
+    <Property Name="amount" Type="float" Nullable="false" />
+    <Property Name="percent" Type="float" Nullable="false" />
+    <Property Name="isCapitalised" Type="bit" Nullable="false" />
+    <Property Name="isOpened" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Entity">
+    <Key>
+      <PropertyRef Name="idClient" />
+    </Key>
+    <Property Name="idClient" Type="nvarchar" MaxLength="4" Nullable="false" />
+    <Property Name="dirName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="dirSurname" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Logs">
+    <Key>
+      <PropertyRef Name="idLog" />
+    </Key>
+    <Property Name="idLog" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idClient" Type="nvarchar" MaxLength="4" Nullable="false" />
+    <Property Name="time" Type="datetime" Nullable="false" />
+    <Property Name="idReciever" Type="nvarchar" MaxLength="4" />
+    <Property Name="amount" Type="float" />
+    <Property Name="direction" Type="bit" />
+    <Property Name="message" Type="nvarchar" MaxLength="80" />
+  </EntityType>
+  <EntityType Name="Persons">
+    <Key>
+      <PropertyRef Name="idClient" />
+    </Key>
+    <Property Name="idClient" Type="nvarchar" MaxLength="4" Nullable="false" />
+    <Property Name="cName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="isVip" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="Хранилище BankDBModelContainer">
+    <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Deposits" EntityType="Self.Deposits" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Entity" EntityType="Self.Entity" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Logs" EntityType="Self.Logs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Persons" EntityType="Self.Persons" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

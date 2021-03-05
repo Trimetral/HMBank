@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BankDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Clients">
+    <Key>
+      <PropertyRef Name="idClient" />
+    </Key>
+    <Property Name="idClient" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="clientName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="isPerson" Type="Boolean" Nullable="false" />
+    <Property Name="adress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="invoice" Type="Double" Nullable="false" />
+    <Property Name="earning" Type="Double" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Deposits">
+    <Key>
+      <PropertyRef Name="idClient" />
+    </Key>
+    <Property Name="idClient" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="amount" Type="Double" Nullable="false" />
+    <Property Name="percent" Type="Double" Nullable="false" />
+    <Property Name="isCapitalised" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Entity">
+    <Key>
+      <PropertyRef Name="idClient" />
+    </Key>
+    <Property Name="idClient" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="dirName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="dirSurname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Logs">
+    <Key>
+      <PropertyRef Name="idLog" />
+    </Key>
+    <Property Name="idLog" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idClient" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="time" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="idReciever" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+    <Property Name="amount" Type="Double" />
+    <Property Name="direction" Type="Boolean" />
+    <Property Name="message" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Persons">
+    <Key>
+      <PropertyRef Name="idClient" />
+    </Key>
+    <Property Name="idClient" Type="String" MaxLength="4" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="cName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="isVip" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="BankDB" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Clients" EntityType="Self.Clients" />
+    <EntitySet Name="Deposits" EntityType="Self.Deposits" />
+    <EntitySet Name="Entity" EntityType="Self.Entity" />
+    <EntitySet Name="Logs" EntityType="Self.Logs" />
+    <EntitySet Name="Persons" EntityType="Self.Persons" />
+  </EntityContainer>
+</Schema>

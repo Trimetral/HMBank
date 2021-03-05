@@ -55,7 +55,7 @@ namespace AccountAdLibrary.Account
         public void RemoveFromBalance(decimal sum, string clientName)
         {
             this.account -= sum;
-            AccountChanged?.Invoke(new Case(clientName, false, sum));
+            AccountChanged?.Invoke(new Case(clientName, false, sum, DateTime.Now));
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace AccountAdLibrary.Account
         public void AddToBalance(decimal sum, string clientName)
         {
             this.account += sum;
-            AccountChanged?.Invoke(new Case(clientName, true, sum));
+            AccountChanged?.Invoke(new Case(clientName, true, sum, DateTime.Now));
         }
 
 
@@ -77,7 +77,7 @@ namespace AccountAdLibrary.Account
         {
             this.account -= sum;
             deposit.Amount += sum;
-            AccountChanged?.Invoke(new Case(false, sum));
+            AccountChanged?.Invoke(new Case(false, sum, DateTime.Now));
         }
 
         /// <summary>
@@ -88,10 +88,10 @@ namespace AccountAdLibrary.Account
         {
             this.account += sum;
             deposit.Amount -= sum;
-            AccountChanged?.Invoke(new Case(true, sum));
+            AccountChanged?.Invoke(new Case(true, sum, DateTime.Now));
         }
 
-        public override string ToString() => Account.ToString("#.##");
+        public override string ToString() => Account.ToString("0.##");
 
     }
 }

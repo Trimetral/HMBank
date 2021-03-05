@@ -14,8 +14,8 @@ namespace ExceptionsLibrary.Exceptions
         /// <summary>
         /// Ошибка заполнения данных
         /// </summary>
-        /// <param name="param">Параметр с ошибкой</param>
-        public DataException(string param) : base($"Ошибка заполнения данных: {param}")
+        /// <param name="message">Параметр с ошибкой</param>
+        public DataException(string message) : base($"Ошибка заполнения данных: {message}")
         {
 
         }
